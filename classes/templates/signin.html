@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="jumbotron">
+		<form action="{% url 'signin' %}" method="POST">
+			{% csrf_token %}
+			{{form|crispy}}
+			<input type="submit" value="Signup" class="btn btn-primary btn-sm">
+		</form>
+	</div>
+{% endblock content %}

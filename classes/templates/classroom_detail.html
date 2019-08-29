@@ -6,10 +6,44 @@
     Classroom Details
   </div>
   <div class="card-body">
-    <h5 class="card-title" style="color: 000034;">{{classroom.name}} {{classroom.subject}}</h5>
-    <p class="card-text" style="color: 000034;">{{classroom.year}}</p>
-    <a href="{% url 'classroom-update' classroom.id %}" class="btn" style="background-color: #000034; color: white;">Update</a>
-    <a href="{% url 'classroom-delete' classroom.id %}" class="btn" style="background-color: #FFA500; color: #000034;">Delete</a>
+    <h5 class="card-title" style="color: 000034;">{{classroom.name}}</h5>
+    <hr>
+    <p class="card-text" style="color: 000034;"><strong>Subject:</strong> {{classroom.subject}}</p>
+    <p class="card-text" style="color: 000034;"><strong>Teacher:</strong> {{classroom.teacher}}</p>
+    <p class="card-text" style="color: 000034;"><strong>Year:</strong> {{classroom.year}}</p>
+    <br>
+    <table class='table'>
+    	<tr>
+			<th>First Name:</th>
+			<th>Last Name:</th>
+			<th>Date of Birth:</th>
+			<th>Gender:</th>
+			<th>Exam Grade:</th>
+            <th>Edit:</th>
+            <th>Delete:</th>
+    	</tr>
+    	{% for student in students %}
+    		<tr>
+    			<th>{{student.first_name}}</th>
+    			<th>{{student.last_name}}</th>
+    			<th>{{student.date_of_birth}}</th>
+    			{% if student.gender == 'M' %}
+    				<th>Male</th>
+    			{% else %}
+    				<th>Female</th>
+    			{% endif %}
+    			<th>{{student.exam_grade}}%</th>
+                <th><a href="{% url 'student-update' student.id %}">Edit</a></th>
+                <th><a href="{% url 'student-delete' student.id %}">Delete</a></th>
+    		</tr>
+    	{% endfor %}
+    </table>
+    <br>
+	{% if request.user == classroom.teacher %}
+	    <a href="{% url 'classroom-update' classroom.id %}" class="btn" style="background-color: #000034; color: white;">Update</a>
+	    <a href="{% url 'classroom-delete' classroom.id %}" class="btn" style="background-color: #FFA500; color: #000034;">Delete</a>
+	    <a href="{% url 'student-create' classroom.id %}" class="btn btn-success">Add Student</a>
+	{% endif %}
   </div>
 </div>
 
